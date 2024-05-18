@@ -27,6 +27,7 @@ export class AppComponent {
       width: '280px'
     });
   }
+  // This is the function that will open the dialog when the All Movies buttton is clicked
   openMoviesDialog(): void {
     this.dialog.open(MovieCardComponent, {
       width: '500px'
