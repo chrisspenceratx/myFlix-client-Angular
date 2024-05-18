@@ -1,3 +1,5 @@
+// This file is the entry point to the Angular app.  It wires up different modules together and expresses dependencies.
+
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
