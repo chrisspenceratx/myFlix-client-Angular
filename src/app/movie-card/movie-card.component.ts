@@ -82,7 +82,7 @@ export class MovieCardComponent implements OnInit {
    * @returns movies description
    */
   openSynopsisDialog(description: string): void {
-    this.dialog.open(SynopsisInfoComponent, {
+    this.dialog.open(MovieSynopsisComponent, {
       data: {
         Description: description
       },
