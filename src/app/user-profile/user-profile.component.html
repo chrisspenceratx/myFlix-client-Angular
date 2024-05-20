@@ -1,5 +1,24 @@
 <app-navbar></app-navbar>
-<div class="profile-container">
-    <h1>Profile</h1>
-    <mat-card class="user-card-info"> </mat-card>
+<div class="user-profile">
+    <div class="user-info">
+        <h2>User Info</h2>
+        <p>Name: {{ userData.Username }}</p>
+        <p>Birthday: {{ userData.Birthday }}</p>
+        <p>Email: {{ userData.Email }}</p>
+    </div>
+
+    <div class="update-user">
+        <h2>Update User Info</h2>
+        <form (ngSubmit)="updateUser()">
+            <input type="text" [(ngModel)]="userData.Username" name="name" placeholder="Name" />
+            <input type="date" [(ngModel)]="userData.Birthday" name="birthday" placeholder="Birthday" />
+            <input type="email" [(ngModel)]="userData.Email" name="email" placeholder="Email" />
+            <button type="submit">Update</button>
+        </form>
+    </div>
+
+    <div class="fav-movies">
+        <h2>Favorite Movies</h2>
+        <app-movie-card *ngFor="let movie of FavoriteMovies" [movies]="FavoriteMovies"></app-movie-card>
+    </div>
 </div>

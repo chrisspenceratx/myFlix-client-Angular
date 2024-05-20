@@ -9,7 +9,7 @@
                         <mat-card-title>{{ movie.Title }}</mat-card-title>
                         <mat-card-subtitle>{{ movie.Director.Name }}</mat-card-subtitle>
                     </mat-card-header>
-                    <mat-card-actions>
+                    <mat-card-actions class="'actions">
                         <button mat-button color="primary" (click)="
                 openGenreDialog(movie.Genre.Name, movie.Genre.Description)
               ">
@@ -25,14 +25,14 @@
               ">
                             Director
                         </button>
-                        <button mat-button color="primary" (click)="openSynopsisDialog(movie.Title, movie.Description)">
+                        <button mat-button color="primary" (click)="openSynopsisDialog(movie.Title)">
                             Synopsis
                         </button>
                         <button mat-icon-button style="width: auto" color="primary" (click)="toggleFav(movie)">
-                            <mat-icon *fgIf="isFav(movie)" style="transform: scale(1.5)" color="primary">
+                            <mat-icon *ngIf="isFav(movie._id)" style="transform: scale(1.5)" color="primary">
                                 favorite
                             </mat-icon>
-                            <mat-icon *ngIf="!isFav(movie)" style="transform: scale(1.5)" color="primary">
+                            <mat-icon *ngIf="!isFav(movie._id)" style="transform: scale(1.5)" color="primary">
                                 favorite_border
                             </mat-icon>
                         </button>

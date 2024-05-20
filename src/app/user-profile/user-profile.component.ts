@@ -35,7 +35,6 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProfile();
-    this.getFavMovies();
   }
 
   /**
@@ -58,7 +57,6 @@ export class UserProfileComponent implements OnInit {
     }
   }
 
-
   /**
    * this method updates the user's profile information
    * @returns message "User update successful" or "User update failed"
@@ -78,6 +76,4 @@ export class UserProfileComponent implements OnInit {
       });
     });
   }
-
-
 }

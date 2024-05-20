@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-movie-synopsis',
@@ -6,8 +7,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./movie-synopsis.component.scss']
 })
 export class MovieSynopsisComponent implements OnInit {
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
+  constructor(
+    public dialogRef: MatDialogRef<MovieSynopsisComponent>,
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      Title: string;
+      Description: string;
+      Actors: string;
+      ReleaseYear: string;
+    }
+  ) { }
 
+  ngOnInit(): void {
+  }
 }
