@@ -97,8 +97,14 @@ export class FetchApiDataService {
    * @returns {Observable<any>} - Observable for the API response.
    */
   public getLocalUser(): any {
-    const user = JSON.parse(localStorage.getItem('user') || 'null');
-    return user;
+    try {
+      const user = JSON.parse(localStorage.getItem('user') || 'null');
+      console.log('User from local storage:', user)
+      return user;
+    } catch (error) {
+      console.log('Error getting user from local storage:', error);
+      return null;
+    }
   }
 
   // get a user by userId 
