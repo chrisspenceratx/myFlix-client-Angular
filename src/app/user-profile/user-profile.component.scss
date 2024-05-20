@@ -1,0 +1,38 @@
+.user-profile {
+    color: white;
+    margin: 50px 8% 0% 8%;
+}
+
+h1 {
+    margin-top: 80px;
+    font-size: 1.8em;
+    font-weight: 500;
+}
+
+.user-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 0% 0% 0% 0%;
+    background-color: lightgray;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px;
+    background-color: gray;
+    width: 30%;
+    padding: 10px;
+}
+
+.update-user {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    padding: 10px;
+    background: gray;
+    width: 70%;
+}

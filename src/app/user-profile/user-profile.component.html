@@ -1,20 +1,22 @@
 <app-navbar></app-navbar>
 <div class="user-profile">
-    <div class="user-info">
-        <h2>User Info</h2>
-        <p>Name: {{ userData.Username }}</p>
-        <p>Birthday: {{ userData.Birthday }}</p>
-        <p>Email: {{ userData.Email }}</p>
-    </div>
-
-    <div class="update-user">
-        <h2>Update User Info</h2>
-        <form (ngSubmit)="updateUser()">
-            <input type="text" [(ngModel)]="userData.Username" name="name" placeholder="Name" />
-            <input type="date" [(ngModel)]="userData.Birthday" name="birthday" placeholder="Birthday" />
-            <input type="email" [(ngModel)]="userData.Email" name="email" placeholder="Email" />
-            <button type="submit">Update</button>
-        </form>
+    <h1>User Profile</h1>
+    <div class="user-container">
+        <div class="user-info">
+            <h2>User Info</h2>
+            <p>Name: {{ userData.Username }}</p>
+            <p>Birthday: {{ userData.Birthday }}</p>
+            <p>Email: {{ userData.Email }}</p>
+        </div>
+        <div class="update-user">
+            <h2>Update User Info</h2>
+            <form (ngSubmit)="updateUser()">
+                <input type="text" [(ngModel)]="userData.Username" name="name" placeholder="Name" />
+                <input type="date" [(ngModel)]="userData.Birthday" name="birthday" placeholder="Birthday" />
+                <input type="email" [(ngModel)]="userData.Email" name="email" placeholder="Email" />
+                <button type="submit">Update</button>
+            </form>
+        </div>
     </div>
 
     <div class="fav-movies">

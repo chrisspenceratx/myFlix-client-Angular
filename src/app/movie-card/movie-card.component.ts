@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { of } from 'rxjs';
 
 // import components
 import { DirectorInfoComponent } from '../director-info/director-info.component';
@@ -46,11 +47,17 @@ export class MovieCardComponent implements OnInit {
 
 
   getFavMovies(): void {
-    this.user = this.fetchApiData.getUser();
-    if (Array.isArray(this.user.FavoriteMovies)) {
-      this.FavoriteMovies = this.user.FavoriteMovies;
-    }
-    console.log('Fav Movies in getFavMovie', this.FavoriteMovies);
+    this.fetchApiData.getUser().subscribe((resp: any) => {
+      console.log('Server response in getFavMovies', resp)
+      if (resp) {
+        this.user = resp;
+        if (Array.isArray(this.user.FavoriteMovies)) {
+          this.FavoriteMovies = this.user.FavoriteMovies;
+        }
+        console.log('Fav Movies in getFavMovie', this.FavoriteMovies);
+      };
+      return this.user;
+    });
   }
 
   isFav(movie: any): any {
@@ -80,6 +87,7 @@ export class MovieCardComponent implements OnInit {
       this.userData.UserId = parsedUser._id;
       console.log('userData:', this.userData);
       this.fetchApiData.addFavoriteMovie(parsedUser._id, movie._id).subscribe((Resp) => {
+        console.log('server response:', Resp);
         localStorage.setItem('user', JSON.stringify(Resp));
         this.getFavMovies();
         this.snackBar.open(`${movie.Title} has been added to your favorites`, 'OK', {

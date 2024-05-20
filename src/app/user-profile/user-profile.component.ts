@@ -43,15 +43,22 @@ export class UserProfileComponent implements OnInit {
    */
 
   getProfile(): void {
-    const userId = localStorage.getItem('userId');
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
+    console.log('user in getProfile:', user)
+    const userId = user ? user._id : null;
+    console.log('userId in getProfile:', userId)
     if (userId) {
       this.fetchApiData.getUser(userId).subscribe((user: any) => {
+        console.log('User data from server:', user);
         this.user = user;
         this.userData.Username = this.user.Username;
         this.userData.Email = this.user.Email;
         this.userData.Birthday = this.user.Birthday;
+        console.log('User data after assignment:', this.userData);
         this.fetchApiData.getAllMovies().subscribe((resp: any) => {
+          console.log('All movies from server:', resp);
           this.FavoriteMovies = resp.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
+          console.log('Favorite movies after assignment to FavoriteMovies variable:', this.FavoriteMovies);
         });
       });
     }

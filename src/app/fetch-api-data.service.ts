@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
@@ -32,6 +32,7 @@ export class FetchApiDataService {
 
   // This service will handle the user login form
   public userLogin(userDetails: any): Observable<any> {
+    console.log(userDetails);
     return this.http.post(apiUrl + 'login', userDetails).pipe
       (
         catchError(this.handleError)
@@ -97,24 +98,32 @@ export class FetchApiDataService {
    * @returns {Observable<any>} - Observable for the API response.
    */
   public getLocalUser(): any {
-    try {
-      const user = JSON.parse(localStorage.getItem('user') || 'null');
-      console.log('User from local storage:', user)
-      return user;
-    } catch (error) {
-      console.log('Error getting user from local storage:', error);
+    const user = localStorage.getItem('user');
+    if (user && this.isJsonString(user)) {
+      return JSON.parse(user);
+    } else {
+      console.log('Invalid user data in local storage:', user);
       return null;
     }
   }
 
-  // get a user by userId 
+  private isJsonString(str: string): boolean {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
   public getUser(userId?: string): Observable<any> {
     if (!userId) {
       const user = this.getLocalUser();
-      if (user) {
-        userId = user.id;
+      if (user && user._id) {
+        userId = user._id;
       } else {
-        throw new Error('User Id not provided and no user found in local storage.')
+        console.log('User Id not provided and no user found in local storage.')
+        return of(null)
       }
     }
 
