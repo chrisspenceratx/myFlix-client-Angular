@@ -1,2 +1,15 @@
-<!-- This lets Angular know which component to show for the selected route  -->
+<mat-toolbar color="black">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span>MyFlix App</span>
+    <span class="example-spacer"></span>
+    <button mat-raised-button (click)="openUserRegistrationDialog()" style="margin-right: 10px" color="primary">
+        Sign Up
+    </button>
+    <button mat-raised-button (click)="openUserLoginDialog()" color="primary" style="margin-right: 10px">
+        Login
+    </button>
+</mat-toolbar>
+
 <router-outlet></router-outlet>
