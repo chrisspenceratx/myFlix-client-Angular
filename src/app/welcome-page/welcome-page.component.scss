@@ -1,0 +1,40 @@
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.main-page {
+    background-image: url('/assets/cinema_image.jpg');
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+h1 {
+    font-size: 6em;
+    color: lightgray;
+    font-weight: 700;
+    margin-bottom: 5%;
+    margin-top: 0.5em;
+}
+
+h2 {
+    font-size: 2em;
+    color: lightgray;
+    font-weight: 500;
+    margin-top: 10%;
+}
+
+.welcome-button {
+    margin: 15px;
+    width: 180px;
+    height: 40px;
+    font-size: 1.2em;
+}
+
+.button-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
