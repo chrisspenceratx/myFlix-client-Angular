@@ -16,7 +16,7 @@ import { GenreInfoComponent } from '../genre-info/genre-info.component';
   styleUrls: ['./movie-card.component.scss']
 })
 export class MovieCardComponent implements OnInit {
-  @Input() movies: any = {};
+  @Input() movies: any = [];
   user: any = {};
   userData = { UserId: "", FavoriteMovies: [] }
   FavoriteMovies: any[] = [];
@@ -34,6 +34,10 @@ export class MovieCardComponent implements OnInit {
     this.getFavMovies();
   }
 
+  /**
+   * Function to get all movies from the database
+   * @returns all movies
+   */
   getMovies(): void {
     this.fetchApiData.getAllMovies().subscribe((resp: any) => {
       if (Array.isArray(resp)) {
@@ -45,20 +49,33 @@ export class MovieCardComponent implements OnInit {
   }
 
 
-
+  /**
+   * Function to get user's favorite movies
+   * @returns user's favorite movies
+   */
   getFavMovies(): void {
-    this.fetchApiData.getUser().subscribe((resp: any) => {
-      console.log('Server response in getFavMovies', resp)
-      if (resp) {
-        this.user = resp;
-        if (Array.isArray(this.user.FavoriteMovies)) {
-          this.FavoriteMovies = this.user.FavoriteMovies;
-        }
-        console.log('Fav Movies in getFavMovie', this.FavoriteMovies);
-      };
-      return this.user;
-    });
+    let user = localStorage.getItem('user');
+    if (user) {
+      let parsedUser = JSON.parse(user);
+      this.userData.UserId = parsedUser._id;
+      this.userData.FavoriteMovies = parsedUser.FavoriteMovies;
+      this.FavoriteMovies = parsedUser.FavoriteMovies;
+    }
+    console.log('Favorite Movies:', this.FavoriteMovies);
   }
+  // getFavMovies(): void { 
+  //   this.fetchApiData.getUser().subscribe((resp: any) => {
+  //     console.log('Server response in getFavMovies', resp)
+  //     if (resp) {
+  //       this.user = resp;
+  //       if (Array.isArray(this.user.FavoriteMovies)) {
+  //         this.FavoriteMovies = this.user.FavoriteMovies;
+  //       }
+  //       console.log('Fav Movies in getFavMovie', this.FavoriteMovies);
+  //     };
+  //     return this.user;
+  //   });  
+  // }
 
   isFav(movie: any): any {
     const MovieID = movie._id;

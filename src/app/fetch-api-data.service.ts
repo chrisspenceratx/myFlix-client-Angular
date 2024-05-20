@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
-import { Observable, throwError, of } from 'rxjs';
+import { Observable, throwError, of, tap } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 //Declaring the api url that will provide data for the client app
@@ -133,6 +133,16 @@ export class FetchApiDataService {
         Authorization: 'Bearer ' + token,
       })
     }).pipe(
+      tap({
+        next: data => {
+          if (this.isJsonString(JSON.stringify(data))) {
+            console.log('Data:', data);
+          } else {
+            console.log('Data is not valid JSON:', data);
+          }
+        },
+        error: error => console.log('Error:', error)
+      }),
       map(this.extractResponseData),
       catchError(this.handleError)
     );
@@ -211,6 +221,7 @@ export class FetchApiDataService {
     * @private
     */
   private extractResponseData(res: Response | Object): any {
+    console.log('Response body:', res)
     const body = res;
     return body || {};
   }
