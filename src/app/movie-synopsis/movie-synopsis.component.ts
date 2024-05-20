@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-movie-synopsis',
@@ -6,5 +6,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./movie-synopsis.component.scss']
 })
 export class MovieSynopsisComponent implements OnInit {
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
 
 }
