@@ -25,6 +25,7 @@ export class UserProfileComponent implements OnInit {
   user: any = {};
   movies: any[] = [];
   FavoriteMovies: any[] = [];
+  favoriteMoviesIDs: any[] = [];
 
   constructor(
     public fetchApiData: FetchApiDataService,
@@ -34,8 +35,8 @@ export class UserProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.getProfile();
     this.getFavMovies();
+    this.getProfile();
   }
 
   /**
@@ -44,19 +45,17 @@ export class UserProfileComponent implements OnInit {
    */
 
   getProfile(): void {
-    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
-    if (user) {
-      this.user = user;
-      this.userData.Username = this.user.Username;
-      this.userData.Email = this.user.Email;
-      this.userData.Birthday = this.user.Birthday;
-      this.fetchApiData.getAllMovies().subscribe((response) => {
-        console.log(response);
-        this.FavoriteMovies = response.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
-      });
-    } else {
-      console.error('User not found');
-    }
+    this.fetchApiData.getUser().subscribe((response) => {
+      this.user = response;
+      return response;
+    });
+    console.log('User:', this.user)
+    this.userData.Username = this.user.Username;
+    this.userData.Email = this.user.Email;
+    this.userData.Birthday = this.user.Birthday;
+    this.fetchApiData.getAllMovies().subscribe((response) => {
+      this.FavoriteMovies = response.filter((movie: any) => this.favoriteMoviesIDs.includes(movie._id));
+    });
   }
   // getProfile(): void {
   //   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
@@ -111,9 +110,9 @@ export class UserProfileComponent implements OnInit {
       let parsedUser = JSON.parse(user);
       this.userData.UserId = parsedUser._id;
       this.userData.FavoriteMovies = parsedUser.FavoriteMovies;
-      this.FavoriteMovies = parsedUser.FavoriteMovies;
+      this.favoriteMoviesIDs = parsedUser.FavoriteMovies;
     }
-    console.log('Favorite Movies:', this.FavoriteMovies);
+    console.log('Favorite Movies IDs:', this.favoriteMoviesIDs);
   }
 
   isFav(movie: any): boolean {
