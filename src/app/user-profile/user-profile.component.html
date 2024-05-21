@@ -1,92 +1,39 @@
-<!-- Navbar component -->
 <app-navbar></app-navbar>
-
-<!-- User profile section -->
 <div class="user-profile">
     <h1>User Profile</h1>
-
-    <!-- User information display section -->
     <div class="user-container">
-        <h2>User Info</h2>
-
-        <!-- Display user's name -->
-        <div class="user-info-display">
-            <label>Name</label>
-            <span>{{ userData.Username }}</span>
+        <div class="user-info">
+            <h2>User Info</h2>
+            <p>Name: {{ userData.Username }}</p>
+            <p>Birthday: {{ userData.Birthday | date : "longDate" }}</p>
+            <p>Email: {{ userData.Email }}</p>
+            <button (click)="deleteUser()">Delete User</button>
         </div>
-
-        <!-- Display user's birthday -->
-        <div class="user-info-display">
-            <label>Birthday</label>
-            <span>{{ userData.Birthday | date : "longDate" }}</span>
-        </div>
-
-        <!-- Display user's email -->
-        <div class="user-info-display">
-            <label>Email</label>
-            <span>{{ userData.Email }}</span>
-        </div>
-
-        <!-- User information update form -->
-        <div class="update-user-info">
+        <div class="update-user">
             <h2>Update User Info</h2>
-            <form (ngSubmit)="updateUser()" class="example-form">
-                <!-- Input field for user's name -->
-                <mat-form-field class="example-full-width">
-                    <mat-label>Name</mat-label>
-                    <input shouldLabelFloat="true" matInput type="text" [(ngModel)]="userData.Username" name="name"
-                        placeholder="Name" />
-                </mat-form-field>
-
-                <!-- Input field for user's birthday -->
-                <mat-form-field class="example-full-width">
-                    <mat-label>Birthday</mat-label>
-                    <input matInput type="date" [(ngModel)]="formUserData.Birthday" name="birthday"
-                        placeholder="Birthday" />
-                </mat-form-field>
-
-                <!-- Input field for user's email -->
-                <mat-form-field class="example-full-width">
-                    <mat-label>Email</mat-label>
-                    <input matInput type="email" [(ngModel)]="userData.Email" name="email" placeholder="Email" />
-                </mat-form-field>
-
-                <!-- Update and Delete User buttons -->
-                <div class="button-container">
-                    <button mat-raised-button color="warn" type="submit">Update</button>
-                    <button mat-raised-button color="primary" (click)="deleteUser()">
-                        Delete User
-                    </button>
-                </div>
+            <form (ngSubmit)="updateUser()">
+                <input type="text" [(ngModel)]="formUserData.Username" name="name" placeholder="Name" />
+                <input type="date" [(ngModel)]="formUserData.Birthday" name="birthday" placeholder="Birthday" />
+                <input type="email" [(ngModel)]="formUserData.Email" name="email" placeholder="Email" />
+                <button type="submit">Update</button>
             </form>
         </div>
     </div>
 
-    <!-- Favorite movies section -->
     <div class="content">
-        <h2>Favorite Movies</h2>
-
-        <!-- Container for favorite movies -->
         <div class="favorite-movies-container">
-            <!-- Message when there are no favorite movies -->
+            <h2>Favorite Movies</h2>
             <div *ngIf="FavoriteMovies.length === 0" class="movie-cards">
                 <p>No favorite movies yet!</p>
             </div>
-
-            <!-- Display favorite movies -->
             <div class="movie-cards">
                 <mat-card *ngFor="let movie of FavoriteMovies" class="card">
-                    <!-- Movie image -->
                     <img src="{{ movie.ImageURL }}" alt="{{ movie.Title }}" />
-
-                    <!-- Movie details -->
                     <div class="cardContent">
                         <mat-card-header>
                             <mat-card-title>{{ movie.Title }}</mat-card-title>
                             <mat-card-subtitle>{{ movie?.Director?.Name }}</mat-card-subtitle>
                         </mat-card-header>
-
-                        <!-- Movie actions (Genre, Director, Synopsis, Favorite) -->
                         <mat-card-actions class="actions">
                             <button mat-button color="primary" (click)="
                   openGenreDialog(movie.Genre.Name, movie.Genre.Description)
@@ -108,10 +55,12 @@
                                 Synopsis
                             </button>
                             <button mat-icon-button style="width: auto" color="primary" (click)="toggleFav(movie)">
-                                <mat-icon *ngIf="isFav(movie)" style="transform: scale(1.5)"
-                                    color="primary">favorite</mat-icon>
-                                <mat-icon *ngIf="!isFav(movie)" style="transform: scale(1.5)"
-                                    color="primary">favorite_border</mat-icon>
+                                <mat-icon *ngIf="isFav(movie)" style="transform: scale(1.5)" color="primary">
+                                    favorite
+                                </mat-icon>
+                                <mat-icon *ngIf="!isFav(movie)" style="transform: scale(1.5)" color="primary">
+                                    favorite_border
+                                </mat-icon>
                             </button>
                         </mat-card-actions>
                     </div>
@@ -119,4 +68,10 @@
             </div>
         </div>
     </div>
+    <!-- <div class="fav-movies">
+    <h2>Favorite Movies</h2>
+    <app-movie-card
+      *ngFor="let movie of FavoriteMovies">
+    </app-movie-card>
+  </div> -->
 </div>

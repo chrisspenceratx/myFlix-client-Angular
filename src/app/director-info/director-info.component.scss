@@ -1,23 +1,7 @@
 .director-card-header {
-    position: relative;
-    background-color: hsl(0, 4%, 79%);
-    padding: 10px;
-    justify-content: center;
-    align-items: center;
-}
-
-.director-card-title {
-    font-size: 2em;
-    color: hsl(0, 0%, 8%);
+    font-size: 1.5em;
     font-weight: 500;
-    margin-bottom: 10px;
-    text-align: center;
-}
-
-.director-card-content {
-    padding: 20px;
-    font-size: 1.3em;
-    color: hsl(0, 0%, 18%);
-    background-color: hsl(0, 1%, 78%);
-    margin-top: 1px;
+    margin-bottom: 15px;
+    align-items: center;
+    justify-content: center;
 }
