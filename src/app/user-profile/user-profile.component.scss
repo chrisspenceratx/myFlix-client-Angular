@@ -3,7 +3,7 @@
 
 .user-profile {
     color: white;
-    margin: 50px 8% 0% 8%;
+    margin: 8%;
 }
 
 h1 {
@@ -14,8 +14,8 @@ h1 {
 
 .user-info-display {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-    padding: 1em 0;
-    margin: 1em 0;
+    padding: 0.9em 0;
+    margin: 0.9em 0;
 }
 
 .user-info-display label {
@@ -24,15 +24,15 @@ h1 {
 }
 
 .user-info-display span {
-    position: absolute;
-    left: 20%;
+    position: relative;
+    left: 10%;
     font-size: 1em;
     color: rgba(0, 0, 0, 0.87);
 }
 
 .user-container {
     color: hsl(0, 0%, 24%);
-    padding: 10px 10px 10px 15px;
+    padding: 10px 10px 10px 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -40,6 +40,8 @@ h1 {
     background-color: lightgray;
     margin-bottom: 20px;
     margin-top: 20px;
+    margin-left: 10%;
+    margin-right: 10%;
 }
 
 .user-info,

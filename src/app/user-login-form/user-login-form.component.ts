@@ -4,6 +4,9 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 
+/**
+ * Component for user login form.
+ */
 @Component({
   selector: 'app-user-login-form',
   templateUrl: './user-login-form.component.html',
@@ -11,8 +14,18 @@ import { Router } from '@angular/router';
 })
 export class UserLoginFormComponent implements OnInit {
 
+  /**
+   * User data input.
+   */
   @Input() userData = { Username: '', Password: '' };
 
+  /**
+   * Constructs the UserLoginFormComponent.
+   * @param FetchApiDataService - The service for fetching API data.
+   * @param dialogRef - The reference to the dialog.
+   * @param snackBar - The service for showing snack bar notifications.
+   * @param router - The Angular router.
+   */
   constructor(
     public FetchApiDataService: FetchApiDataService,
     public dialogRef: MatDialogRef<UserLoginFormComponent>,
@@ -20,14 +33,20 @@ export class UserLoginFormComponent implements OnInit {
     private router: Router
   ) { }
 
-
+  /**
+   * Angular's OnInit lifecycle hook.
+   */
   ngOnInit(): void {
   }
 
   /**
-   * Function responsible for sending the form inputs to the backend
+   * Logs in a user.
+   * Sends the user data to the backend and handles the response.
    */
   loginUser(): void {
+    this.snackBar.open('Note: As this is a personal project and I deployed my API on render, my free instance will spin down with inactivity, which can delay requests by 50 seconds or more. Thank you for your patience.', "OK", {
+      duration: 2000
+    });
     this.FetchApiDataService.userLogin(this.userData).subscribe({
       next: (result) => {
         // Logic for a successful user login

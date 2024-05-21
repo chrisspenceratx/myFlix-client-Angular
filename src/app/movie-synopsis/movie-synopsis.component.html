@@ -1,13 +1,16 @@
-<mat-card-header class="synopsis-card-header">
-    <mat-card-title>{{ data.Title }}</mat-card-title>
-</mat-card-header>
-<mat-card-content class="synopsis-card-content">
-    <p>{{ data.Description }}</p>
-    <p>Release Year: {{ data.ReleaseYear }}</p>
-    <div *ngIf="data.Actors && data.Actors.length > 0">
-        <p>Actors:</p>
-        <ul>
-            <li *ngFor="let actor of data.Actors">{{ actor }}</li>
-        </ul>
-    </div>
-</mat-card-content>
+<mat-card>
+    <mat-card-header class="synopsis-card-header" *ngIf="data?.Title">
+        <mat-card-title class="synopsis-card-title">{{
+            data.Title
+            }}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="synopsis-card-content">
+        <p>{{ data.Description }}</p>
+        <div *ngIf="data.Actors && data.Actors.length > 0">
+            <p>Actors:</p>
+            <ul>
+                <li *ngFor="let actor of data.Actors">{{ actor }}</li>
+            </ul>
+        </div>
+    </mat-card-content>
+</mat-card>
