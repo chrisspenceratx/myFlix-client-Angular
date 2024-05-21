@@ -77,14 +77,17 @@ export class MovieCardComponent implements OnInit {
   //   });  
   // }
 
-  isFav(movie: any): any {
-    const MovieID = movie._id;
-    if (this.FavoriteMovies.some((movie) => movie === MovieID)) {
-      return true;
-    } else {
-      return false;
-    }
+  isFav(movie: any): boolean {
+    return this.FavoriteMovies.includes(movie._id);
   }
+  // isFav(movie: any): any {
+  //   const MovieID = movie._id;
+  //   if (this.FavoriteMovies.some((movie) => movie === MovieID)) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   toggleFav(movie: any): void {
     console.log('toggleFav called with movie:', movie);

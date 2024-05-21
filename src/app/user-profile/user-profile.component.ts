@@ -44,13 +44,19 @@ export class UserProfileComponent implements OnInit {
    */
 
   getProfile(): void {
-    this.user = this.fetchApiData.getUser();
-    this.userData.Username = this.user.Username;
-    this.userData.Email = this.user.Email;
-    this.userData.Birthday = this.user.Birthday;
-    this.fetchApiData.getAllMovies().subscribe((response) => {
-      this.FavoriteMovies = response.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
-    });
+    const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
+    if (user) {
+      this.user = user;
+      this.userData.Username = this.user.Username;
+      this.userData.Email = this.user.Email;
+      this.userData.Birthday = this.user.Birthday;
+      this.fetchApiData.getAllMovies().subscribe((response) => {
+        console.log(response);
+        this.FavoriteMovies = response.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
+      });
+    } else {
+      console.error('User not found');
+    }
   }
   // getProfile(): void {
   //   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
@@ -110,14 +116,17 @@ export class UserProfileComponent implements OnInit {
     console.log('Favorite Movies:', this.FavoriteMovies);
   }
 
-  isFav(movie: any): any {
-    const MovieID = movie._id;
-    if (this.FavoriteMovies.some((movie) => movie === MovieID)) {
-      return true;
-    } else {
-      return false;
-    }
+  isFav(movie: any): boolean {
+    return this.FavoriteMovies.includes(movie._id);
   }
+  // isFav(movie: any): boolean {
+  //   const MovieID = movie._id;
+  //   if (this.FavoriteMovies.some((movie) => movie === MovieID)) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
   toggleFav(movie: any): void {
     console.log('toggleFav called with movie:', movie);
