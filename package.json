@@ -1,5 +1,6 @@
 {
   "name": "my-flix-client-angular",
+  "homepage": "https://chrisspenceratx.github.io/myFlix-client-Angular/welcome",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,6 +8,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "docs": "typedoc --out docs --mode file --theme minimal src",
     "serve:ssr:myFlix-client-Angular": "node dist/my-flix-client-angular/server/server.mjs"
   },
