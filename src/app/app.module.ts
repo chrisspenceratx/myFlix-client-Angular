@@ -23,9 +23,6 @@ import { UserLoginFormComponent } from './user-login-form/user-login-form.compon
 import { MovieCardComponent } from './movie-card/movie-card.component';
 import { WelcomePageComponent } from './welcome-page/welcome-page.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { FlexLayoutServerModule } from '@angular/flex-layout/server';
-import { provideHttpClient, withFetch } from '@angular/common/http';
-
 import { NavbarComponent } from './navbar/navbar.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { DirectorInfoComponent } from './director-info/director-info.component';
@@ -68,11 +65,10 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     MatIconModule,
     FlexLayoutModule,
-    FlexLayoutServerModule,
     DialogModule,
     MatMenuModule
   ],
-  providers: [provideHttpClient(withFetch())],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -136,7 +136,6 @@ export class FetchApiDataService {
       tap({
         next: data => {
           if (this.isJsonString(JSON.stringify(data))) {
-            console.log('Data:', data);
           } else {
             console.log('Data is not valid JSON:', data);
           }
@@ -222,7 +221,6 @@ export class FetchApiDataService {
     * @private
     */
   private extractResponseData(res: Response | Object): any {
-    console.log('Response body of extracResponseData:', res)
     const body = res;
     return body || {};
   }
