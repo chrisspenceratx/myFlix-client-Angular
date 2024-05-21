@@ -5,22 +5,23 @@
         <div class="user-info">
             <h2>User Info</h2>
             <p>Name: {{ userData.Username }}</p>
-            <p>Birthday: {{ userData.Birthday }}</p>
+            <p>Birthday: {{ userData.Birthday | date : "longDate" }}</p>
             <p>Email: {{ userData.Email }}</p>
+            <button (click)="deleteUser()">Delete User</button>
         </div>
         <div class="update-user">
             <h2>Update User Info</h2>
             <form (ngSubmit)="updateUser()">
-                <input type="text" [(ngModel)]="userData.Username" name="name" placeholder="Name" />
-                <input type="date" [(ngModel)]="userData.Birthday" name="birthday" placeholder="Birthday" />
-                <input type="email" [(ngModel)]="userData.Email" name="email" placeholder="Email" />
+                <input type="text" [(ngModel)]="formUserData.Username" name="name" placeholder="Name" />
+                <input type="date" [(ngModel)]="formUserData.Birthday" name="birthday" placeholder="Birthday" />
+                <input type="email" [(ngModel)]="formUserData.Email" name="email" placeholder="Email" />
                 <button type="submit">Update</button>
             </form>
         </div>
     </div>
 
     <div class="content">
-        <div class="container">
+        <div class="favorite-movies-container">
             <h2>Favorite Movies</h2>
             <div *ngIf="FavoriteMovies.length === 0" class="movie-cards">
                 <p>No favorite movies yet!</p>

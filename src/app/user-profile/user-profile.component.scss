@@ -31,6 +31,7 @@ h1 {
 .update-user {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     margin: 10px;
     padding: 10px;
     background: gray;
@@ -52,10 +53,10 @@ h1 {
 .content {
     margin-top: 80px;
     scroll-behavior: smooth;
-
 }
 
-.container {
+// Movie Cards Favorite Movies
+.favorite-movies-container {
     display: grid;
     background-color: black;
     width: 90%;
@@ -64,7 +65,7 @@ h1 {
     margin: 0 auto;
 }
 
-.container .movie-cards {
+.favorite-movies-container .movie-cards {
     display: grid;
     width: 100%;
     grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));

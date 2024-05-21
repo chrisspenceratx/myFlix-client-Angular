@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
+// Import MatSnackBar to display notifications
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // Component Imports
 import { DirectorInfoComponent } from '../director-info/director-info.component';
@@ -10,8 +12,7 @@ import { MovieSynopsisComponent } from '../movie-synopsis/movie-synopsis.compone
 // Import the API calls service
 import { FetchApiDataService } from '../fetch-api-data.service';
 
-// Import MatSnackBar to display notifications
-import { MatSnackBar } from '@angular/material/snack-bar';
+
 
 @Component({
   selector: 'app-user-profile',
@@ -21,6 +22,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class UserProfileComponent implements OnInit {
 
   @Input() userData = { Username: '', Email: '', Birthday: '', FavoriteMovies: [], UserId: '' };
+  formUserData = { Username: '', Email: '', Birthday: '', FavoriteMovies: [], UserId: '' };
 
   user: any = {};
   movies: any[] = [];
@@ -28,14 +30,14 @@ export class UserProfileComponent implements OnInit {
   favoriteMoviesIDs: any[] = [];
 
   constructor(
-    public fetchApiData: FetchApiDataService,
+    private fetchApiData: FetchApiDataService,
     public dialog: MatDialog,
     public snackBar: MatSnackBar,
     public router: Router
   ) { }
 
   ngOnInit(): void {
-    this.getFavMovies();
+    // this.getFavMovies();
     this.getProfile();
   }
 
@@ -44,40 +46,24 @@ export class UserProfileComponent implements OnInit {
    * @returns users username, email, birthday and favorite movies
    */
 
-  getProfile(): void {
-    this.fetchApiData.getUser().subscribe((response) => {
-      console.log('response:', response)
-      this.user = response;
-      this.userData.Username = this.user.Username;
-      this.userData.Email = this.user.Email;
-      this.userData.Birthday = this.user.Birthday;
-      this.fetchApiData.getAllMovies().subscribe((response) => {
-        this.FavoriteMovies = response.filter((movie: any) => this.favoriteMoviesIDs.includes(movie._id));
+  getProfile(): Promise<void> {
+    return new Promise((resolve) => {
+      this.fetchApiData.getUser().subscribe((response) => {
+        console.log('response:', response)
+        this.user = response;
+        this.userData.Username = this.user.Username;
+        this.userData.Email = this.user.Email;
+        this.userData.Birthday = this.user.Birthday;
+        this.userData.UserId = this.user._id; // Add this line
+        this.formUserData = { ...this.userData }
+        this.favoriteMoviesIDs = this.user.FavoriteMovies;
+        this.fetchApiData.getAllMovies().subscribe((response) => {
+          this.FavoriteMovies = response.filter((movie: any) => this.favoriteMoviesIDs.includes(movie._id));
+          resolve();
+        });
       });
     });
   }
-  // getProfile(): void {
-  //   const user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user') as string) : null;
-  //   console.log('user in getProfile:', user)
-  //   const userId = user ? user._id : null;
-  //   console.log('userId in getProfile:', userId)
-  //   if (userId) {
-  //     console.log('userId in getProfile:', userId)
-  //     this.fetchApiData.getUser(userId).subscribe((user: any) => {
-  //       console.log('User data from server:', user);
-  //       this.user = user;
-  //       this.userData.Username = this.user.Username;
-  //       this.userData.Email = this.user.Email;
-  //       this.userData.Birthday = this.user.Birthday;
-  //       console.log('User data after assignment:', this.userData);
-  //       this.fetchApiData.getAllMovies().subscribe((resp: any) => {
-  //         console.log('All movies from server:', resp);
-  //         this.FavoriteMovies = resp.filter((movie: any) => this.user.FavoriteMovies.includes(movie._id));
-  //         console.log('Favorite movies after assignment to FavoriteMovies variable:', this.FavoriteMovies);
-  //       });
-  //     });
-  //   }
-  // }
 
   /**
    * this method updates the user's profile information
@@ -93,7 +79,6 @@ export class UserProfileComponent implements OnInit {
       if (Array.isArray(resp)) {
         this.movies = resp;
       }
-      console.log(this.movies);
       return this.movies;
     });
   }
@@ -104,47 +89,28 @@ export class UserProfileComponent implements OnInit {
    * @returns user's favorite movies
    */
   getFavMovies(): void {
-    let user = localStorage.getItem('user');
-    if (user) {
-      let parsedUser = JSON.parse(user);
-      this.userData.UserId = parsedUser._id;
-      this.userData.FavoriteMovies = parsedUser.FavoriteMovies;
-      this.favoriteMoviesIDs = parsedUser.FavoriteMovies;
-    }
-    console.log('Favorite Movies IDs:', this.favoriteMoviesIDs);
+    this.fetchApiData.getUser().subscribe((response) => {
+      this.favoriteMoviesIDs = response.FavoriteMovies;
+    });
   }
 
   isFav(movie: any): boolean {
-    return this.FavoriteMovies.includes(movie._id);
+    return this.favoriteMoviesIDs.includes(movie._id);
   }
-  // isFav(movie: any): boolean {
-  //   const MovieID = movie._id;
-  //   if (this.FavoriteMovies.some((movie) => movie === MovieID)) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
 
   toggleFav(movie: any): void {
-    console.log('toggleFav called with movie:', movie);
     const isFavorite = this.isFav(movie);
-    console.log('isFavorite:', isFavorite);
     isFavorite
       ? this.deleteFavMovies(movie)
       : this.addFavMovies(movie);
   }
 
   addFavMovies(movie: any): void {
-    console.log('addFavMovies called with movie:', movie)
     let user = localStorage.getItem('user');
     if (user) {
       let parsedUser = JSON.parse(user);
-      console.log('user:', parsedUser);
       this.userData.UserId = parsedUser._id;
-      console.log('userData:', this.userData);
       this.fetchApiData.addFavoriteMovie(parsedUser._id, movie._id).subscribe((Resp) => {
-        console.log('server response:', Resp);
         localStorage.setItem('user', JSON.stringify(Resp));
         this.getFavMovies();
         this.snackBar.open(`${movie.Title} has been added to your favorites`, 'OK', {
@@ -199,12 +165,13 @@ export class UserProfileComponent implements OnInit {
   }
 
   updateUser(): void {
-    this.fetchApiData.editUserProfile(this.userData).subscribe((resp) => {
+    this.fetchApiData.editUserProfile(this.formUserData).subscribe((resp) => {
       console.log('User update success:', resp);
       localStorage.setItem('user', JSON.stringify(resp));
       this.snackBar.open('User updated successfully!', 'OK', {
         duration: 2000,
       });
+      this.getProfile();
     }, (error) => {
       console.log('Error updating user:', error);
       this.snackBar.open('Failed to update user', 'OK', {
@@ -212,5 +179,21 @@ export class UserProfileComponent implements OnInit {
       });
     });
   }
+
+  // delete user function
+  async deleteUser(): Promise<void> {
+    console.log('deleteUser function called:', this.userData.UserId)
+    if (confirm('Do you want to delete your account permanently?')) {
+      await this.getProfile();
+      this.fetchApiData.deleteUser(this.userData.UserId).subscribe(() => {
+        localStorage.clear();
+        this.router.navigate(['welcome']);
+        this.snackBar.open('Account deleted successfully!', 'OK', {
+          duration: 2000,
+        });
+      });
+    }
+  }
+
 
 }
