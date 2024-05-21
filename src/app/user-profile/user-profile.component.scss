@@ -1,3 +1,6 @@
+/* Google Font */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;700&display=swap");
+
 .user-profile {
     color: white;
     margin: 50px 8% 0% 8%;
@@ -9,8 +12,29 @@ h1 {
     font-weight: 500;
 }
 
+.user-info-display {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    padding: 1em 0;
+    margin: 1em 0;
+}
+
+.user-info-display label {
+    font-size: 0.75em;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.user-info-display span {
+    position: absolute;
+    left: 20%;
+    font-size: 1em;
+    color: rgba(0, 0, 0, 0.87);
+}
+
 .user-container {
+    color: hsl(0, 0%, 24%);
+    padding: 10px 10px 10px 15px;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     margin: 0% 0% 0% 0%;
     background-color: lightgray;
@@ -18,19 +42,25 @@ h1 {
     margin-top: 20px;
 }
 
-.user-info {
+.user-info,
+.update-user-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 10px;
     background-color: gray;
-    width: 30%;
-    padding: 10px;
+    width: 100%;
+    padding: 15px;
+}
+
+.example-form {
+    display: flex;
+    flex-direction: column;
 }
 
 .update-user {
     display: flex;
     flex-direction: column;
+    margin-top: 20px;
     flex-wrap: wrap;
     margin: 10px;
     padding: 10px;
@@ -38,8 +68,16 @@ h1 {
     width: 70%;
 }
 
-/* Google Font */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;700&display=swap");
+.button-container {
+    display: flex;
+    gap: 10px;
+}
+
+button {
+    width: 50%;
+}
+
+
 
 /* Global Styles */
 * {
@@ -51,7 +89,6 @@ h1 {
 
 /* Custom CSS */
 .content {
-    margin-top: 80px;
     scroll-behavior: smooth;
 }
 
@@ -59,7 +96,7 @@ h1 {
 .favorite-movies-container {
     display: grid;
     background-color: black;
-    width: 90%;
+    width: 100%;
     min-height: 100vh;
     align-items: center;
     margin: 0 auto;

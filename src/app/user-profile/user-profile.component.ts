@@ -46,22 +46,20 @@ export class UserProfileComponent implements OnInit {
    * @returns users username, email, birthday and favorite movies
    */
 
-  getProfile(): Promise<void> {
-    return new Promise((resolve) => {
-      this.fetchApiData.getUser().subscribe((response) => {
-        console.log('response:', response)
-        this.user = response;
-        this.userData.Username = this.user.Username;
-        this.userData.Email = this.user.Email;
-        this.userData.Birthday = this.user.Birthday;
-        this.userData.UserId = this.user._id; // Add this line
-        this.formUserData = { ...this.userData }
-        this.favoriteMoviesIDs = this.user.FavoriteMovies;
-        this.fetchApiData.getAllMovies().subscribe((response) => {
-          this.FavoriteMovies = response.filter((movie: any) => this.favoriteMoviesIDs.includes(movie._id));
-          resolve();
-        });
-      });
+  getProfile(): void {
+    this.fetchApiData.getUser().subscribe((response) => {
+      console.log('response:', response)
+      this.user = response;
+      this.userData.Username = this.user.Username;
+      this.userData.Email = this.user.Email;
+      let birthday = new Date(this.user.BirthDay)
+      this.userData.Birthday = birthday.toISOString().split('T')[0];
+      this.userData.UserId = this.user._id; // Add this line
+      this.formUserData = { ...this.userData }
+      this.favoriteMoviesIDs = this.user.FavoriteMovies;
+    });
+    this.fetchApiData.getAllMovies().subscribe((response) => {
+      this.FavoriteMovies = response.filter((movie: any) => this.favoriteMoviesIDs.includes(movie._id));
     });
   }
 
@@ -110,8 +108,8 @@ export class UserProfileComponent implements OnInit {
     if (user) {
       let parsedUser = JSON.parse(user);
       this.userData.UserId = parsedUser._id;
-      this.fetchApiData.addFavoriteMovie(parsedUser._id, movie._id).subscribe((Resp) => {
-        localStorage.setItem('user', JSON.stringify(Resp));
+      this.fetchApiData.addFavoriteMovie(parsedUser._id, movie._id).subscribe((resp) => {
+        localStorage.setItem('user', JSON.stringify(resp));
         this.getFavMovies();
         this.snackBar.open(`${movie.Title} has been added to your favorites`, 'OK', {
           duration: 3000,
@@ -124,9 +122,10 @@ export class UserProfileComponent implements OnInit {
     let user = localStorage.getItem('user');
     if (user) {
       let parsedUser = JSON.parse(user);
-      this.fetchApiData.deleteFavoriteMovie(parsedUser._id, movie._id).subscribe((Resp) => {
-        localStorage.setItem('user', JSON.stringify(Resp));
-        this.getFavMovies();
+      this.fetchApiData.deleteFavoriteMovie(parsedUser._id, movie._id).subscribe((resp) => {
+        localStorage.setItem('user', JSON.stringify(resp));
+        // this.getFavMovies();
+        this.FavoriteMovies = this.FavoriteMovies.filter(favorite_movie => favorite_movie._id !== movie._id);
         this.snackBar.open(`${movie.Title} has been removed from your favorites`, 'OK', {
           duration: 3000,
         });
@@ -184,14 +183,14 @@ export class UserProfileComponent implements OnInit {
   async deleteUser(): Promise<void> {
     console.log('deleteUser function called:', this.userData.UserId)
     if (confirm('Do you want to delete your account permanently?')) {
-      await this.getProfile();
+      // await this.getProfile();
       this.fetchApiData.deleteUser(this.userData.UserId).subscribe(() => {
-        localStorage.clear();
-        this.router.navigate(['welcome']);
         this.snackBar.open('Account deleted successfully!', 'OK', {
-          duration: 2000,
+          duration: 3000,
         });
       });
+      localStorage.clear();
+      this.router.navigate(['welcome']);
     }
   }
 
