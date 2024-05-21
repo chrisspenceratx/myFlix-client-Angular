@@ -3,7 +3,7 @@
     <div class="container">
         <div class="movie-cards">
             <mat-card *ngFor="let movie of movies" class="card">
-                <img src="{{ movie.ImagePath }}" alt="{{ movie.Title }}" />
+                <img src="{{ movie.ImageURL }}" alt="{{ movie.Title }}" />
                 <div class="cardContent">
                     <mat-card-header>
                         <mat-card-title>{{ movie.Title }}</mat-card-title>
