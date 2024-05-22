@@ -79,7 +79,7 @@ export class MovieCardComponent implements OnInit {
 
 
   isFav(movie: any): boolean {
-    return this.FavoriteMovies.includes(movie._id);
+    return this.FavoriteMovies ? this.FavoriteMovies.includes(movie._id) : false;
   }
   // isFav(movie: any): any {
   //   const MovieID = movie._id;
