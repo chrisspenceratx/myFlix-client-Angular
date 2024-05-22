@@ -37,7 +37,7 @@ export class UserProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.getFavMovies();
+    this.getFavMovies();
     this.getProfile();
   }
 
@@ -91,6 +91,8 @@ export class UserProfileComponent implements OnInit {
   getFavMovies(): void {
     this.fetchApiData.getUser().subscribe((response) => {
       this.favoriteMoviesIDs = response.FavoriteMovies;
+      const favoriteMovieIds = this.user.FavoriteMovies;
+
     });
   }
 
