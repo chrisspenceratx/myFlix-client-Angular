@@ -116,11 +116,11 @@ export class FetchApiDataService {
     return true;
   }
 
-  public setLocalUser(user: any): void{
-    if(user.isJsonObject(user))
-        localStorage.setItem('user', JSON.stringify(user));
+  public setLocalUser(user: any): void {
+    if (user.isJsonObject(user))
+      localStorage.setItem('user', JSON.stringify(user));
     else
-        console.log('Error setting user');
+      console.log('Error setting user');
   }
 
   public getUser(userId?: string): Observable<any> {
@@ -172,22 +172,22 @@ export class FetchApiDataService {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
     console.log('addFavoriteMovie: ', user);
-    if(user!==null){
-        let parsedUser = JSON.parse(user);
-        console.log('apiUrl: ', apiUrl + 'users/' + parsedUser.Username + '/movies/' + movieId);
-        return this.http.post(apiUrl + 'users/' + parsedUser.Username + '/movies/' + movieId, movieId, {
-          headers: new HttpHeaders({
-            Authorization: 'Bearer ' + token,
-          })
-        }).pipe(
-          map(this.extractResponseData),
-          catchError(this.handleError)
-        );
+    if (user !== null) {
+      let parsedUser = JSON.parse(user);
+      console.log('apiUrl: ', apiUrl + 'users/' + parsedUser.Username + '/movies/' + movieId);
+      return this.http.post(apiUrl + 'users/' + parsedUser.Username + '/movies/' + movieId, movieId, {
+        headers: new HttpHeaders({
+          Authorization: 'Bearer ' + token,
+        })
+      }).pipe(
+        map(this.extractResponseData),
+        catchError(this.handleError)
+      );
     } else {
-        console.log('User data not found');
-        return of(null);
+      console.log('User data not found');
+      return of(null);
     }
-    
+
   }
 
   // Delete a movie from a user's list of favorites
@@ -195,19 +195,19 @@ export class FetchApiDataService {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
 
-    if(user!==null) {
-        let parsedUser = JSON.parse(user);
-        return this.http.delete(apiUrl + 'users/' + parsedUser.Username + '/movies/' + movieId, {
+    if (user !== null) {
+      let parsedUser = JSON.parse(user);
+      return this.http.delete(apiUrl + 'users/' + parsedUser.Username + '/movies/' + movieId, {
         headers: new HttpHeaders({
-            Authorization: 'Bearer ' + token,
+          Authorization: 'Bearer ' + token,
         })
-        }).pipe(
+      }).pipe(
         map(this.extractResponseData),
         catchError(this.handleError)
-        );
+      );
     } else {
-        console.log('User data not found');
-        return of(null);
+      console.log('User data not found');
+      return of(null);
     }
   }
 
