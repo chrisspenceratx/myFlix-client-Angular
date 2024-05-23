@@ -124,18 +124,11 @@ export class FetchApiDataService {
   }
 
   public getUser(userId?: string): Observable<any> {
-    if (!userId) {
-      const user = this.getLocalUser();
-      if (user && user._id) {
-        userId = user._id;
-      } else {
-        console.log('User Id not provided and no user found in local storage.')
-        return of(null)
-      }
-    }
+
+    const user = this.getLocalUser();
 
     const token = localStorage.getItem('token');
-    return this.http.get(apiUrl + 'users/' + userId, {
+    return this.http.get(apiUrl + 'users/' + user.Username, {
       headers: new HttpHeaders({
         Authorization: 'Bearer ' + token,
       })
