@@ -1,6 +1,6 @@
 {
   "name": "my-flix-client-angular",
-  "homepage": "https://chrisspenceratx.github.io/myFlix-client-Angular/welcome",
+  "homepage": "https://chrisspenceratx.github.io/myFlix-client-Angular",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
