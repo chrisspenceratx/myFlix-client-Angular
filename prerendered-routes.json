@@ -1,7 +1,0 @@
-{
-  "routes": [
-    "/movies",
-    "/profile",
-    "/welcome"
-  ]
-}
