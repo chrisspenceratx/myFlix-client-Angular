@@ -2,6 +2,12 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
 
+## Technologies Used
+
+- **Angular**: A powerful web application framework.
+- **Angular Material**: A UI component library for Angular applications.
+- **RxJS**: A library for reactive programming using Observables.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
