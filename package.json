@@ -9,7 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "ng deploy --base-href=/myFlix-client-Angular/",
     "docs": "typedoc --out docs --mode file --theme minimal src",
     "serve:ssr:myFlix-client-Angular": "node dist/my-flix-client-angular/server/server.mjs"
   },
